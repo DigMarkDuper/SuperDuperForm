@@ -7,7 +7,7 @@ export interface RegistrationRow {
   nickname: string;
   whatsapp: string;
   email: string;
-  birthYear: string;
+  birthDate: string;
   domicile: string;
   status: string;
   learningGoals: string;
@@ -50,7 +50,7 @@ export async function appendRegistration(row: RegistrationRow) {
     row.nickname,
     row.whatsapp,
     row.email,
-    row.birthYear,
+    row.birthDate,
     row.domicile,
     row.status,
     row.learningGoals,

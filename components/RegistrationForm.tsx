@@ -8,7 +8,7 @@ const YEARS = Array.from({ length: 25 }, (_, i) => String(2000 + i));
 export default function RegistrationForm() {
   const [step, setStep] = useState(1);
   const [values, setValues] = useState({
-    fullName: '', nickname: '', whatsapp: '', email: '', birthYear: '', domicile: '',
+    fullName: '', nickname: '', whatsapp: '', email: '', birthDate: '', domicile: '',
     status: '', statusOther: '', learningGoals: [] as string[], learningGoalsOther: '',
     englishLevel: '', program: '', source: '', sourceOther: '',
   });
@@ -89,8 +89,8 @@ export default function RegistrationForm() {
           <img src="/assets/logo.png" alt="Super Duper Language Center" className="h-10 w-auto drop-shadow-md" />
           <span className="font-display text-sm font-bold tracking-tight text-brand-yellow">SUPER DUPER</span>
         </div>
-        <h1 className="font-display text-3xl sm:text-4xl font-extrabold leading-tight tracking-tight mb-2">Start Your English Journey</h1>
-        <p className="text-white/90 text-sm sm:text-base max-w-md">Belajar English. Build Confidence. Build Your Future.</p>
+        <h1 className="font-display text-3xl sm:text-4xl font-extrabold leading-tight tracking-tight mb-2">Speak English. Live the Experience.</h1>
+        <p className="text-white/90 text-sm sm:text-base max-w-md">Intensive English learning in Yogyakarta designed to build your confidence, communication skills, and real-world English ability.</p>
       </div>
 
       <div className="px-6 sm:px-8 -mt-6 relative z-10">
@@ -110,7 +110,7 @@ export default function RegistrationForm() {
               <Field label="Nama Panggilan" required htmlFor="pn"><input id="pn" type="text" value={values.nickname} onChange={e=>update('nickname',e.target.value)} className={inputClass(errors.nickname)} placeholder="Contoh: Ejak" aria-invalid={!!errors.nickname} aria-describedby="pn-err" />{errMsg(errors.nickname, 'pn-err')}</Field>
               <Field label="Nomor WhatsApp" required htmlFor="wa"><input id="wa" type="tel" value={values.whatsapp} onChange={e=>update('whatsapp',e.target.value)} className={inputClass(errors.whatsapp)} placeholder="081234567890" aria-invalid={!!errors.whatsapp} aria-describedby="wa-err" />{errMsg(errors.whatsapp, 'wa-err')}</Field>
               <Field label="Email" htmlFor="em"><input id="em" type="email" value={values.email} onChange={e=>update('email',e.target.value)} className={inputClass(errors.email)} placeholder="anda@email.com (opsional)" aria-invalid={!!errors.email} aria-describedby="em-err" />{errMsg(errors.email, 'em-err')}</Field>
-              <Field label="Tahun Lahir" required htmlFor="by"><select id="by" value={values.birthYear} onChange={e=>update('birthYear',e.target.value)} className={inputClass(errors.birthYear)} aria-invalid={!!errors.birthYear} aria-describedby="by-err"><option value="">Pilih tahun</option>{YEARS.map(y=><option key={y} value={y}>{y}</option>)}</select>{errMsg(errors.birthYear, 'by-err')}</Field>
+              <Field label="Tanggal lahir" required htmlFor="bd"><input id="bd" type="text" value={values.birthDate || ''} onChange={e=>update('birthDate',e.target.value)} className={inputClass(errors.birthDate)} placeholder="DD/MM/YYYY" aria-invalid={!!errors.birthDate} aria-describedby="bd-err" />{errMsg(errors.birthDate, 'bd-err')}</Field>
               <Field label="Domisili Saat Ini" required htmlFor="dom"><input id="dom" type="text" value={values.domicile} onChange={e=>update('domicile',e.target.value)} className={inputClass(errors.domicile)} placeholder="Contoh: Yogyakarta" aria-invalid={!!errors.domicile} aria-describedby="dom-err" />{errMsg(errors.domicile, 'dom-err')}</Field>
             </div>
           )}
