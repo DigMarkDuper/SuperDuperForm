@@ -10,6 +10,7 @@ export default function RegistrationForm() {
   const [values, setValues] = useState({
     fullName: '', nickname: '', whatsapp: '', email: '', birthDate: '', domicile: '',
     status: '', statusOther: '', learningGoals: [] as string[], learningGoalsOther: '',
+    website: '', loadTime: String(Date.now()),
     englishLevel: '', program: '', source: '', sourceOther: '',
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -17,6 +18,8 @@ export default function RegistrationForm() {
   const [regId, setRegId] = useState('');
   const [serverError, setServerError] = useState('');
   const submitRef = useRef(false);
+  const [loadTime, setLoadTime] = useState<number>(0);
+  useEffect(() => { setLoadTime(Date.now()); }, []);
 
   const update = useCallback((k: string, v: unknown) => {
     setValues((prev) => ({ ...prev, [k]: v }));
@@ -95,6 +98,9 @@ export default function RegistrationForm() {
 
       <div className="px-6 sm:px-8 -mt-6 relative z-10">
         <div className="bg-white rounded-2xl shadow-xl shadow-brand-dark/5 border border-brand-blue-soft/40 p-6 sm:p-8">
+          {/* Bot guard — honeypot + timing */}
+          <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" style={{position:"absolute",left:"-9999px"}} value={values.website || ""} onChange={e=>update("website",e.target.value)} />
+          <input type="hidden" name="loadTime" value={String(values.loadTime || "")} onChange={e=>update("loadTime",e.target.value)} />
           <ProgressIndicator step={step} />
           {status === 'error' && serverError && (
             <div className="mb-4 rounded-xl bg-red-50 text-red-700 text-sm px-4 py-3 border border-red-100" role="alert">{serverError}</div>

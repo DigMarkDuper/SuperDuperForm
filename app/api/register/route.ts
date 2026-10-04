@@ -34,6 +34,16 @@ export async function POST(req: NextRequest) {
     // Build goals with explanation embedded
     // goals stored with embedded explanations below
 
+    // Bot guard — honeypot + timing
+    if (d.website && String(d.website).trim().length > 0) {
+      console.log("[BOT] honeypot triggered");
+      return NextResponse.json({ success: false, error: "We couldn't complete your registration right now. Please try again in a moment." }, { status: 400 });
+    }
+    const loadTimeVal = parseInt(String(d.loadTime || ""));
+    if (!isNaN(loadTimeVal) && (Date.now() - loadTimeVal) < 3000) {
+      console.log("[BOT] timing guard triggered");
+      return NextResponse.json({ success: false, error: "We couldn't complete your registration right now. Please try again in a moment." }, { status: 400 });
+    }
     const v = validate(d, 3);
     if (!v.ok) {
       return NextResponse.json({ success: false, error: "Please complete the required fields.", details: v.errors }, { status: 400 });
