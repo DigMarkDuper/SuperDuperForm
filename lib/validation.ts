@@ -3,7 +3,7 @@ export interface FormData {
   nickname: string;
   whatsapp: string;
   email: string;
-  birthYear: string;
+  birthDate: string;
   domicile: string;
   status: string;
   statusOther: string;
@@ -52,8 +52,24 @@ export function validate(data: Partial<FormData>, step?: number): { ok: boolean;
       if (n.length < 10 || n.length > 15) errors.whatsapp = "Nomor WhatsApp tidak valid";
     }
     if (d.email && d.email.trim().length > 0 && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email.trim())) errors.email = "Format email tidak valid";
-    if (!d.birthYear) errors.birthYear = "Pilih tahun lahir";
-    else if (!/^\d{4}$/.test(d.birthYear) || parseInt(d.birthYear) < 1940 || parseInt(d.birthYear) > 2015) errors.birthYear = "Tahun lahir tidak masuk akal";
+    if (!d.birthDate || d.birthDate.trim().length === 0) errors.birthDate = "Masukkan tanggal lahir";
+    else {
+      const bdRegex = /^\d{2}\/\d{2}\/\d{4}$/;
+      if (!bdRegex.test(d.birthDate.trim())) errors.birthDate = "Format tanggal lahir harus DD/MM/YYYY";
+      else {
+        const parts = d.birthDate.trim().split("/");
+        const year = parseInt(parts[2], 10);
+        const month = parseInt(parts[1], 10);
+        const day = parseInt(parts[0], 10);
+        if (year < 1940 || year > 2015) errors.birthDate = "Tahun lahir tidak masuk akal";
+        else {
+          const dateObj = new Date(year, month - 1, day);
+          if (dateObj.getFullYear() !== year || dateObj.getMonth() + 1 !== month || dateObj.getDate() !== day) {
+            errors.birthDate = "Tanggal lahir tidak valid";
+          }
+        }
+      }
+    }
     if (!d.domicile || d.domicile.trim().length < 2) errors.domicile = "Masukkan domisili saat ini";
   }
 
