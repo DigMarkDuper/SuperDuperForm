@@ -4,6 +4,8 @@ export interface FormData {
   whatsapp: string;
   email: string;
   birthDate: string;
+  website?: string;
+  loadTime?: string;
   domicile: string;
   status: string;
   statusOther: string;

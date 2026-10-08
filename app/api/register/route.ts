@@ -29,6 +29,8 @@ export async function POST(req: NextRequest) {
       program: String(body.program || "").trim(),
       source: String(body.source || "").trim(),
       sourceOther: String(body.sourceOther || "").trim().slice(0, 120),
+      website: String(body.website || "").trim(),
+      loadTime: String(body.loadTime || "").trim(),
     };
 
     // Build goals with explanation embedded
